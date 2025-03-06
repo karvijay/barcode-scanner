@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order | Smart Canteen</title>
+    <link rel="stylesheet" href="style.css">
+    |
+</head>
+<body>
+
+<div class="container">
+    <div class="bg-container">
+        <h2 class="heading">🍽️ Select Your Menu</h2>
+<br>
+        <h3>DRINKS 🥤</h3>
+        
+        <table style="width:75%">
+            <tr>
+                <th>Item</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+            </tr>
+            <tr>
+                <td>TEA ☕</td>
+                <td>₹20</td>
+                <td><input type="number" id="tea" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>COFFEE 🍵</td>
+                <td>₹25</td>
+                <td><input type="number" id="coffee" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>LEMON JUICE 🧃</td>
+                <td>₹40</td>
+                <td><input type="number" id="lemonJuice" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>APPLE JUICE 🍎</td>
+                <td>₹40</td>
+                <td><input type="number" id="appleJuice" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+        </table>
+
+        <h3>FOODS 🍲</h3>
+        <table style="width:75%">
+            <tr>
+                <th>Item</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+            </tr>
+            <tr>
+                <td>BIRIYANI 🥘🍗</td>
+                <td>₹90</td>
+                <td><input type="number" id="biryani" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>FRIED RICE 🍲</td>
+                <td>₹80</td>
+                <td><input type="number" id="friedRice" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>NOODLES 🍝</td>
+                <td>₹60</td>
+                <td><input type="number" id="noodles" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>PAROTTA 🫓</td>
+                <td>₹20</td>
+                <td><input type="number" id="parotta" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+        </table>
+
+        <h3>SNACKS 🍟</h3>
+        <table style="width:75%">
+            <tr>
+                <th>Item</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+            </tr>
+            <tr>
+                <td>PUFFS</td>
+                <td>₹20</td>
+                <td><input type="number" id="puffs" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>CAKE 🍰</td>
+                <td>₹50</td>
+                <td><input type="number" id="cake" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>SAMOSA</td>
+                <td>₹15</td>
+                <td><input type="number" id="samosa" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+            <tr>
+                <td>CHOCOLATE 🍫</td>
+                <td>₹10</td>
+                <td><input type="number" id="chocolate" value="0" min="0" onchange="calculateTotal()"></td>
+            </tr>
+        </table>
+
+        <h3>Total Amount: ₹<span id="total-amount">0</span></h3>
+
+        <label for="pickup-time">Select Pickup Time:</label>
+        <input type="time" id="pickup-time">
+
+        <button onclick="showPaymentOptions()">Proceed to Payment</button>
+
+        <div id="payment-options" style="display: none;">
+            <h3>Select Payment Method</h3>
+            <button onclick="processCashPayment()">Cash</button>
+            <button onclick="dummyUPIPayment()">UPI</button>
+            <button onclick="processCardPayment()">Card</button>
+        </div>
+
+        <p id="payment-status"></p>
+        <p id="order-msg"></p>
+    </div>
+</div>
+
+<script>
+    function calculateTotal() {
+        // Get the quantities and multiply by respective prices
+        let tea = parseInt(document.getElementById("tea").value) * 20;
+        let coffee = parseInt(document.getElementById("coffee").value) * 25;
+        let lemonJuice = parseInt(document.getElementById("lemonJuice").value) * 40;
+        let appleJuice = parseInt(document.getElementById("appleJuice").value) * 40;
+
+        let biryani = parseInt(document.getElementById("biryani").value) * 90;
+        let friedRice = parseInt(document.getElementById("friedRice").value) * 80;
+        let noodles = parseInt(document.getElementById("noodles").value) * 60;
+        let parotta = parseInt(document.getElementById("parotta").value) * 20;
+
+        let puffs = parseInt(document.getElementById("puffs").value) * 20;
+        let cake = parseInt(document.getElementById("cake").value) * 50;
+        let samosa = parseInt(document.getElementById("samosa").value) * 15;
+        let chocolate = parseInt(document.getElementById("chocolate").value) * 10;
+
+        // Calculate the total amount
+        let total = tea + coffee + lemonJuice + appleJuice +
+                    biryani + friedRice + noodles + parotta +
+                    puffs + cake + samosa + chocolate;
+
+        // Update the total amount on the page
+        document.getElementById("total-amount").innerText = total;
+    }
+
+    function showPaymentOptions() {
+        // Get the quantities of each item
+        let tea = parseInt(document.getElementById("tea").value);
+        let coffee = parseInt(document.getElementById("coffee").value);
+        let lemonJuice = parseInt(document.getElementById("lemonJuice").value);
+        let appleJuice = parseInt(document.getElementById("appleJuice").value);
+        let biryani = parseInt(document.getElementById("biryani").value);
+        let friedRice = parseInt(document.getElementById("friedRice").value);
+        let noodles = parseInt(document.getElementById("noodles").value);
+        let parotta = parseInt(document.getElementById("parotta").value);
+        let puffs = parseInt(document.getElementById("puffs").value);
+        let cake = parseInt(document.getElementById("cake").value);
+        let samosa = parseInt(document.getElementById("samosa").value);
+        let chocolate = parseInt(document.getElementById("chocolate").value);
+
+        // Check if at least one item is selected
+        if (tea === 0 && coffee === 0 && lemonJuice === 0 && appleJuice === 0 &&
+            biryani === 0 && friedRice === 0 && noodles === 0 && parotta === 0 &&
+            puffs === 0 && cake === 0 && samosa === 0 && chocolate === 0) {
+            document.getElementById("payment-status").innerText = "⚠️ Please select at least one item.";
+            return;
+        }
+
+        // Hide the message and show payment options
+        document.getElementById("payment-status").innerText = "";
+        document.getElementById("payment-options").style.display = "block";
+    }
+
+    function processCashPayment() {
+        document.getElementById("payment-status").innerText = "Payment Method: Cash";
+        confirmOrder();
+    }
+
+    function dummyUPIPayment() {
+        document.getElementById("payment-status").innerText = "Processing UPI Payment...";
+        setTimeout(() => {
+            document.getElementById("payment-status").innerText = "UPI Payment Successful ✅";
+            confirmOrder();
+        }, 2000);
+    }
+
+    function processCardPayment() {
+        document.getElementById("payment-status").innerText = "Processing Card Payment...";
+        setTimeout(() => {
+            document.getElementById("payment-status").innerText = "Card Payment Successful ✅";
+            confirmOrder();
+        }, 2000);
+    }
+
+    function confirmOrder() {
+        let pickupTime = document.getElementById("pickup-time").value;
+        if (!pickupTime) {
+            document.getElementById("order-msg").innerText = "⚠️ Please select a pickup time.";
+            return;
+        }
+        document.getElementById("order-msg").innerText = `✅ Order placed successfully! Pickup at ${pickupTime}.`;
+    }
+</script>
+
+</body>
+</html>

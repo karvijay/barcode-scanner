@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
+    <link rel="stylesheet" href="order.html">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #reader {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Barcode Scanner</h1>
+    <div id="reader"></div>
+    <p id="result">Scan a barcode...</p>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const qrCodeReader = new Html5Qrcode("reader");
+
+            qrCodeReader.start(
+                { facingMode: "environment" },  // Use environment camera (back camera)
+                {
+                    fps: 10,                   // Frames per second
+                    qrbox: { width: 300, height: 300 }
+                },
+                (decodedText) => {
+                    document.getElementById("result").innerText = "Scanned: " + decodedText;
+                        // Stop the scanner once barcode is scanned
+                
+                setTimeout(() => {
+                        window.location.href = "order.html"; // Replace "home.html" with your actual home page URL
+                    }, 2000);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            ).catch(err => {
+                console.error("Camera Error:", err);
+                alert("Camera access failed: " + err.message);
+            });
+        });
+    </script>
+    <div>
+        <button onclick="login()"><a href="order.html">login</a></button>
+    </div>
+</body>
+</html>
